@@ -1,0 +1,1 @@
+A modified version of DJ Raven’s Date Chooser, with improved UI and functionality. Features include single and range date selection, disabled past dates, and customizable theme colors. Lightweight and easy to integrate into any Java Swing application.
