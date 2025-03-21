@@ -439,6 +439,7 @@ public class DateChooser extends JComponent {
         add(panelDate);
     }
 
+    
     private void createLabelCurrentDate() {
         labelCurrentDate = new JButton(dateChooserRender.renderLabelCurrentDate(this, new Date()));
         labelCurrentDate.setForeground(themeColor);
