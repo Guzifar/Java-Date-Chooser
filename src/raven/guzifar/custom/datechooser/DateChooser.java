@@ -59,6 +59,7 @@ public class DateChooser extends JComponent {
     };
 
     private  DateSelectable dateSelectable;
+    private boolean isSundayEnabled = false;
     private RDate selectedDate;
     private boolean closePopupAfterSelected = true;
     private RDate[] selectedDateBetween = new RDate[2];
@@ -78,14 +79,19 @@ public class DateChooser extends JComponent {
     public DateChooser() {
         init();
     }
-
+        
+    public void setEnableSunday(boolean enableSunday){
+        isSundayEnabled = enableSunday;
+    }
+    
     public boolean isClosePopupAfterSelected() {
         return closePopupAfterSelected;
     }
-
+    
     public void setClosePopupAfterSelected(boolean closePopupAfterSelected) {
         this.closePopupAfterSelected = closePopupAfterSelected;
     }
+    
     public void setDateSelectable(DateSelectable dateSelectable) {
         this.dateSelectable = dateSelectable;
         for(Component com:panelDate.getComponents()){
@@ -95,6 +101,7 @@ public class DateChooser extends JComponent {
             }
         }
     }
+    
     public Color getThemeColor() {
         return themeColor;
     }
@@ -367,8 +374,8 @@ public class DateChooser extends JComponent {
                 new JPanel(
                         new MigLayout("fill, inset 0", "[grow 0][fill,45%][fill,30%][grow 0]", "[fill]"));
         panelOption.setOpaque(false);
-        JButton cmdBack = new JButton(new FlatSVGIcon("disabled/date/raven/datechooser/icon/arrowCollapse.svg"));
-        JButton cmdNext = new JButton(new FlatSVGIcon("disabled/date/raven/datechooser/icon/arrowExpand.svg"));
+        JButton cmdBack = new JButton(new FlatSVGIcon("raven/guzifar/datechooser/icon/arrowCollapse.svg"));
+        JButton cmdNext = new JButton(new FlatSVGIcon("raven/guzifar/datechooser/icon/arrowExpand.svg"));
         spMonth = new JSpinner();
         spYear = new JSpinner();
         JSpinner.NumberEditor numberEditor = (JSpinner.NumberEditor) spYear.getEditor();
@@ -482,8 +489,14 @@ public class DateChooser extends JComponent {
             if (calendar.get(Calendar.MONTH) != month) {
                 cmd.setForeground(new Color(170, 170, 170));
             }
-            if (calendar.before(today) || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                cmd.setEnabled(false);
+            if(isSundayEnabled==true){
+                if (calendar.before(today) || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                    cmd.setEnabled(false);
+                }
+            }else{
+                if (calendar.before(today)) {
+                    cmd.setEnabled(false);
+                }
             }
 
             panelDate.add(cmd);
